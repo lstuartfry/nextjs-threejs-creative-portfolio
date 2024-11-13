@@ -45,7 +45,7 @@ export default function NavButton({ x, y, label, link, icon, newTab }) {
         href={link}
         target={newTab ? "_blank" : "_self"}
         aria-label={label}
-        className="hover:shadow-glass-sm text-foreground rounded-full flex items-center justify-center bg-background/20 border border-accent/30 border-solid backdrop-blur-[6px] shadow-glass-inset"
+        className="hover:shadow-glass-sm text-foreground rounded-full flex items-center justify-center custom-bg"
         name={label}
       >
         <span className="hover:text-accent animate-spin-slow-reverse relative w-14 h-14 p-4 group-hover:pause">
