@@ -2,6 +2,8 @@
 
 import React from "react";
 import NavButton from "./NavButton";
+import useScreenSize from "../hooks/useScreenSize";
+import ResponsiveContainer from "../ResponsiveContainer";
 
 const buttonList = [
   { label: "Home", link: "/", icon: "home", newTab: false },
@@ -37,18 +39,37 @@ const buttonList = [
 export default function Navigation() {
   const angleIncrement = 360 / buttonList.length;
 
+  const size = useScreenSize();
+
+  const isLarge = size >= 1024;
+  const isMedium = size >= 768;
+
+  console.log(size);
+
   return (
     <div className="w-full fixed h-screen flex items-center justify-center">
-      <div className="w-max flex items-center justify-center relative animate-spin-slow hover:pause group">
-        {buttonList.map((button, index) => {
-          const angleRadian = (index * angleIncrement * Math.PI) / 180;
-          const radius = "calc(20vw - 1rem)";
-          const x = `calc(${radius} * ${Math.cos(angleRadian)})`;
-          const y = `calc(${radius} * ${Math.sin(angleRadian)})`;
+      <ResponsiveContainer>
+        {(size) => {
+          return size && size >= 480 ? (
+            <div className="w-max flex items-center justify-center relative animate-spin-slow hover:pause group">
+              {buttonList.map((button, index) => {
+                const angleRadian = (index * angleIncrement * Math.PI) / 180;
+                const radius = isLarge
+                  ? "calc(20vw - 1rem)"
+                  : isMedium
+                  ? "calc(30vw - 1rem)"
+                  : "calc(40vw - 1rem)";
+                const x = `calc(${radius} * ${Math.cos(angleRadian)})`;
+                const y = `calc(${radius} * ${Math.sin(angleRadian)})`;
 
-          return <NavButton key={button.label} x={x} y={y} {...button} />;
-        })}
-      </div>
+                return <NavButton key={button.label} x={x} y={y} {...button} />;
+              })}
+            </div>
+          ) : (
+            <div>responsive navigation</div>
+          );
+        }}
+      </ResponsiveContainer>
     </div>
   );
 }
