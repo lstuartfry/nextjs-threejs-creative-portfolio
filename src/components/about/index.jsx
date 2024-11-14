@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import Image from "next/image";
 
 const ItemLayout = ({ children, className }) => (
   <div
@@ -36,6 +37,30 @@ export default function AboutDetails() {
         <ItemLayout className="col-span-4 text-accent">
           Lobortis justo tempus lectus curae venenatis. Accumsan etiam finibus
           feugiat vivamus efficitur quis rhoncus elit.
+        </ItemLayout>
+
+        <ItemLayout className="col-span-12">
+          <img
+            className="w-full h-auto"
+            src="https://skillicons.dev/icons?i=js,ts,html,css,wasm&theme=light"
+            loading="lazy"
+          />
+        </ItemLayout>
+
+        <ItemLayout className="col-span-6">
+          <img
+            className="w-full h-auto"
+            src="https://github-readme-stats.vercel.app/api/top-langs/?username=lstuartfry"
+            loading="lazy"
+          />
+        </ItemLayout>
+
+        <ItemLayout className="col-span-6">
+          <img
+            className="w-full h-auto"
+            src="https://github-readme-stats.vercel.app/api?username=lstuartfry&show_icons=true&theme=radical"
+            loading="lazy"
+          />
         </ItemLayout>
       </div>
     </section>
