@@ -40,6 +40,7 @@ export default function Sound() {
     setIsPlaying((s) => !s);
     shouldPlay ? audioRef.current.play() : audioRef.current.pause();
     localStorage.setItem("musicConsent", String(shouldPlay));
+    localStorage.setItem("consentTime", new Date().toISOString());
     setShowModal(false);
   };
 
@@ -59,8 +60,14 @@ export default function Sound() {
   // create event handlers associated with music consent in local storage
   useEffect(() => {
     const musicConsent = localStorage.getItem("musicConsent");
+    const consentTime = localStorage.getItem("consentTime");
 
-    if (musicConsent) {
+    // if consent exists and is older than 3 days, add event listener for first user interaction
+    if (
+      musicConsent &&
+      consentTime &&
+      new Date(consentTime).getTime() + 3 * 24 * 60 * 60 * 1000 > new Date()
+    ) {
       setIsPlaying(musicConsent === "true");
 
       ["click", "keydown", "touchstart"].forEach((e) => {
