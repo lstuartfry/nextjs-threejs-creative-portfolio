@@ -3,7 +3,8 @@
 import React from "react";
 import NavButton from "./NavButton";
 import useScreenSize from "../hooks/useScreenSize";
-import ResponsiveContainer from "../ResponsiveContainer";
+import ResponsiveComponent from "../ResponsiveComponent";
+import { motion } from "framer-motion";
 
 const buttonList = [
   { label: "Home", link: "/", icon: "home", newTab: false },
@@ -36,6 +37,18 @@ const buttonList = [
   },
 ];
 
+const container = {
+  hidden: {
+    opacity: 0,
+  },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.3,
+    },
+  },
+};
+
 export default function Navigation() {
   const angleIncrement = 360 / buttonList.length;
 
@@ -48,10 +61,15 @@ export default function Navigation() {
 
   return (
     <div className="w-full fixed h-screen flex items-center justify-center">
-      <ResponsiveContainer>
-        {(size) => {
+      <ResponsiveComponent>
+        {({ size }) => {
           return size && size >= 480 ? (
-            <div className="w-max flex items-center justify-center relative animate-spin-slow hover:pause group">
+            <motion.div
+              variants={container}
+              initial="hidden"
+              animate="show"
+              className="w-max flex items-center justify-center relative animate-spin-slow hover:pause group"
+            >
               {buttonList.map((button, index) => {
                 const angleRadian = (index * angleIncrement * Math.PI) / 180;
                 const radius = isLarge
@@ -64,12 +82,12 @@ export default function Navigation() {
 
                 return <NavButton key={button.label} x={x} y={y} {...button} />;
               })}
-            </div>
+            </motion.div>
           ) : (
             <div>responsive navigation</div>
           );
         }}
-      </ResponsiveContainer>
+      </ResponsiveComponent>
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import {
   Github,
   Home,
@@ -33,6 +34,17 @@ const getIcon = (icon) => {
   }
 };
 
+const item = {
+  hidden: {
+    scale: 0,
+  },
+  show: {
+    scale: 1,
+  },
+};
+
+const MotionLink = motion(Link);
+
 export default function NavButton({ x, y, label, link, icon, newTab }) {
   return (
     <div
@@ -41,7 +53,8 @@ export default function NavButton({ x, y, label, link, icon, newTab }) {
         transform: `translate(${x}, ${y})`,
       }}
     >
-      <Link
+      <MotionLink
+        variants={item}
         href={link}
         target={newTab ? "_blank" : "_self"}
         aria-label={label}
@@ -55,7 +68,7 @@ export default function NavButton({ x, y, label, link, icon, newTab }) {
             {label}
           </span>
         </span>
-      </Link>
+      </MotionLink>
     </div>
   );
 }
