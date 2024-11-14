@@ -18,6 +18,7 @@ export default function RootLayout({ children }) {
         {children}
         <Sound />
         <FireFlies />
+        <div id="modal" />
       </body>
     </html>
   );
